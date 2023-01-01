@@ -1,0 +1,67 @@
+name: Action_Kernel
+
+
+on:
+
+  push:
+    branches: [ msm8974 ]
+  pull_request:
+    branches: [ msm8974 ]
+
+
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-20.04
+
+
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: Load Configuration
+        uses: falti/dotenv-action@v1.0.2
+        id: config
+        with:
+          path: config.env
+
+      - name: Check Configuration
+        run: |
+          function required () { if ! [[ "$1" ]]; then echo "$2 variable can't be null." && exit 1; fi }
+          required "${{ steps.config.outputs.kernel_name }}" "Kernel_Name config"
+          required "${{ steps.config.outputs.kernel_branch }}" "Kernel_Branch config"
+          required "${{ steps.config.outputs.kernel_url }}" "Kernel_URL config"
+          required "${{ steps.config.outputs.anykernel_url }}" "AnyKernel_URL config"
+          required "${{ steps.config.outputs.anykernel_branch }}" "AnyKernel_Branch config"
+          required "${{ steps.config.outputs.arm_url }}" "ARM_URL config"
+          required "${{ steps.config.outputs.arm_branch }}" "ARM_Branch config"
+          required "${{ steps.config.outputs.aarch_url }}" "AARCH_URL config"
+          required "${{ steps.config.outputs.aarch_branch }}" "AARCH_Branch config"
+          echo "BUILD_TIME=$(date +%s | md5sum | awk '{print substr($1,1,10)}')" >> $GITHUB_ENV
+
+      - name: Git kernel
+        run: |
+          git clone "${{ steps.config.outputs.kernel_url }}" -b "${{ steps.config.outputs.kernel_branch }}" kernel
+      - name: Setup Environment
+        run: |
+          cd $GITHUB_WORKSPACE/kernel
+          git clone "${{ steps.config.outputs.arm_url }}" -b "${{ steps.config.outputs.arm_branch }}" tool/arm
+          git clone "${{ steps.config.outputs.aarch_url }}" -b "${{ steps.config.outputs.aarch_branch }}" tool/aarch
+          git clone "${{ steps.config.outputs.anykernel_url }}" -b "${{ steps.config.outputs.anykernel_branch }}" tool/AnyKernel
+          sh -c "$(curl -sSL https://github.com/akhilnarang/scripts/raw/master/setup/android_build_env.sh/)"
+
+      - name: make kernel
+        run: |
+          sudo mv build.sh $GITHUB_WORKSPACE/kernel
+          cd $GITHUB_WORKSPACE/kernel
+          bash ./build.sh
+ 
+      - name: Upload to Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          artifacts: "kernel/tool/AnyKernel/Gains_Kernel.zip"
+          tag: "${{ steps.config.outputs.kernel_name }}_${{ env.BUILD_TIME }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
