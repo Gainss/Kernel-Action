@@ -4,9 +4,9 @@ name: Action_Kernel
 on:
 
   push:
-    branches: [ msm8974 ]
+    branches: [ virgo ]
   pull_request:
-    branches: [ msm8974 ]
+    branches: [ virgo ]
 
 
 
