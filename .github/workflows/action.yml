@@ -3,10 +3,9 @@ name: Action_Kernel
 
 on:
 
-  push:
-    branches: [ msm8974 ]
-  pull_request:
-    branches: [ msm8974 ]
+   workflow_dispatch:
+   pull_request_target:
+    branches: [ virgo ]
 
 
 
