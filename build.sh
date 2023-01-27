@@ -1,6 +1,6 @@
 DEFCONFIG=virgo_defconfig
 OBJ_DIR=`pwd`/.obj
-TOOL=$GITHUB_WORKSPACE/kernel/tool/arm/bin/arm-linux-androidkernel-
+TOOL=$GITHUB_WORKSPACE/kernel/tool/arm/bin/arm-linux-androideabi-
 ANYKERNEL_DIR=tool/AnyKernel
 
 if [ ! -d ${OBJ_DIR} ]; then
