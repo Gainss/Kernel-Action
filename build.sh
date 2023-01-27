@@ -1,4 +1,4 @@
-DEFCONFIG=virgo_defconfig
+DEFCONFIG=lineage_kltechn_defconfig
 OBJ_DIR=`pwd`/.obj
 TOOL=$GITHUB_WORKSPACE/kernel/tool/arm/bin/arm-linux-androideabi-
 ANYKERNEL_DIR=tool/AnyKernel
