@@ -1,4 +1,4 @@
-DEFCONFIG=cyanogen_cancro_defconfig
+DEFCONFIG=virgo_defconfig
 OBJ_DIR=`pwd`/.obj
 TOOL=$GITHUB_WORKSPACE/kernel/tool/arm/bin/arm-linux-androidkernel-
 ANYKERNEL_DIR=tool/AnyKernel
