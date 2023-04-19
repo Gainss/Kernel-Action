@@ -4,8 +4,7 @@ name: Action_Kernel
 on:
 
    workflow_dispatch:
-   pull_request_target:
-    branches: [ virgo ]
+    branches: [ li ]
 
 
 
@@ -47,8 +46,7 @@ jobs:
       - name: Setup Environment
         run: |
           cd $GITHUB_WORKSPACE/kernel
-          git clone "${{ steps.config.outputs.arm_url }}" -b "${{ steps.config.outputs.arm_branch }}" tool/arm
-          git clone "${{ steps.config.outputs.aarch_url }}" -b "${{ steps.config.outputs.aarch_branch }}" tool/aarch
+          git clone https://github.com/kdrag0n/proton-clang -b master tool
           git clone "${{ steps.config.outputs.anykernel_url }}" -b "${{ steps.config.outputs.anykernel_branch }}" tool/AnyKernel
           sh -c "$(curl -sSL https://github.com/akhilnarang/scripts/raw/master/setup/android_build_env.sh/)"
 
