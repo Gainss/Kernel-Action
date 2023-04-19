@@ -34,10 +34,6 @@ jobs:
           required "${{ steps.config.outputs.kernel_url }}" "Kernel_URL config"
           required "${{ steps.config.outputs.anykernel_url }}" "AnyKernel_URL config"
           required "${{ steps.config.outputs.anykernel_branch }}" "AnyKernel_Branch config"
-          required "${{ steps.config.outputs.arm_url }}" "ARM_URL config"
-          required "${{ steps.config.outputs.arm_branch }}" "ARM_Branch config"
-          required "${{ steps.config.outputs.aarch_url }}" "AARCH_URL config"
-          required "${{ steps.config.outputs.aarch_branch }}" "AARCH_Branch config"
           echo "BUILD_TIME=$(date +%s | md5sum | awk '{print substr($1,1,10)}')" >> $GITHUB_ENV
 
       - name: Git kernel
